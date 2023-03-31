@@ -18,18 +18,12 @@ variable "availability_zones" {
 variable "bastion_instance_types" {
   type        = list(string)
   description = "Bastion instance types used for spot instances."
-  default     = ["t3.nano", "t3.micro", "t3.small", "t2.nano", "t2.micro", "t2.small"]
+  default     = ["t4g.nano", "t4g.micro", "t4g.small"]
 }
 
 variable "vpc_id" {
   type        = string
   description = "VPC ID where bastion hosts and security groups will be created."
-}
-
-variable "private_subnets" {
-  type        = list(string)
-  description = "Classless Inter-Domain Routing ranges for private subnets."
-  default     = []
 }
 
 variable "public_subnets" {
@@ -215,16 +209,10 @@ variable "volume_type" {
   default     = "gp2"
 }
 
-variable "aws_partition" {
-  type    = string
-  default = "public"
-
-  description = "[Deprecated] Variable will be removed in version `3.0.0`. A Partition is a group of AWS Region and Service objects. You can use a partition to determine what services are available in a region, or what regions a service is available in."
-
-  validation {
-    condition     = contains(["public", "china"], var.aws_partition)
-    error_message = "Argument \"aws_partition\" must be either \"public\" or \"china\"."
-  }
+variable "time_zone" {
+  type        = string
+  default     = "Etc/UTC"
+  description = "Used for ASG Scale Up/Down. Valid values are the canonical names of the IANA time zones (such as Etc/GMT+9 or London/Europe)"
 }
 
 variable "time_zone" {
